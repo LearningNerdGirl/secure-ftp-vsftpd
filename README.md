@@ -27,15 +27,15 @@ The project goes beyond basic tutorial-following — it documents real-world tro
 
 ## 🛠️ Tech Stack
 
-| Component | Technology |
-|-----------|-----------|
-| Operating System | Ubuntu Server 24.04 LTS |
-| FTP Daemon | vsftpd 3.0.5 |
-| Encryption | OpenSSL (TLSv1.2) |
-| Firewall | UFW (Uncomplicated Firewall) |
-| Virtualization | Oracle VirtualBox (Bridged Adapter) |
-| FTP Client | FileZilla |
-| Host OS | Windows 11 |
+| Component        | Technology                          |
+| ---------------- | ----------------------------------- |
+| Operating System | Ubuntu Server 24.04 LTS             |
+| FTP Daemon       | vsftpd 3.0.5                        |
+| Encryption       | OpenSSL (TLSv1.2)                   |
+| Firewall         | UFW (Uncomplicated Firewall)        |
+| Virtualization   | Oracle VirtualBox (Bridged Adapter) |
+| FTP Client       | FileZilla                           |
+| Host OS          | Windows 11                          |
 
 ## 🏗️ Architecture
 
@@ -48,7 +48,7 @@ The project goes beyond basic tutorial-following — it documents real-world tro
 │   │  FTP Client  │     │         │   │  Port 21 (control)       │   │
 │   └──────────────┘     │         │   │  Port 40000-50000 (PASV) │   │
 │                        │         │   └──────────────────────────┘   │
-│   192.168.18.x         │         │   192.168.18.117                 │
+│   192.168.x.x          │         │   192.168.x(VM_IP)               │
 └────────────────────────┘         └──────────────────────────────────┘
                                                   │
                                                   ▼
@@ -62,6 +62,7 @@ The project goes beyond basic tutorial-following — it documents real-world tro
 ## 🚀 Quick Start
 
 ### Prerequisites
+
 - Ubuntu Server 24.04 (or compatible)
 - Sudo access
 - A FileZilla client on a remote machine
@@ -108,14 +109,14 @@ sudo systemctl status vsftpd
 
 ### FileZilla Client Configuration
 
-| Setting | Value |
-|---------|-------|
-| Host | `<server-ip>` |
-| Port | `21` |
-| Protocol | FTP - File Transfer Protocol |
+| Setting        | Value                             |
+| -------------- | --------------------------------- |
+| Host           | `<server-ip>`                     |
+| Port           | `21`                              |
+| Protocol       | FTP - File Transfer Protocol      |
 | **Encryption** | **Require explicit FTP over TLS** |
-| Logon Type | Ask for password |
-| User | `sammy` |
+| Logon Type     | Ask for password                  |
+| User           | `sammy`                           |
 
 ## 🐛 Challenges & Troubleshooting
 
@@ -128,21 +129,23 @@ This is the most valuable section — real issues encountered and how they were 
 **Root cause:** Unrecognized configuration directive caused vsftpd to abort startup.
 
 **Resolution:** Validated the config syntax by running the daemon directly:
+
 ```bash
 sudo vsftpd /etc/vsftpd.conf
 # Output: 500 OOPS: unrecognised variable in config file: userlist_file
 ```
+
 Corrected the directive name and restarted.
 
 ---
 
-### Issue 2: Connection refused on `10.0.2.15`
+### Issue 2: Connection refused on `internal ip`
 
-**Symptom:** FileZilla on the Windows host could not reach the VM. Internal `ftp 10.0.2.15` worked.
+**Symptom:** FileZilla on the Windows host could not reach the VM. Internal `ftp x.x.x.x` worked.
 
 **Root cause:** VirtualBox NAT mode assigns the VM an internal-only IP that is not reachable from the host LAN.
 
-**Resolution:** Switched the VM network adapter from **NAT** to **Bridged Adapter**. The VM received `192.168.18.117` from the local DHCP and became directly reachable.
+**Resolution:** Switched the VM network adapter from **NAT** to **Bridged Adapter**. The VM received `your_server_ip` from the local DHCP and became directly reachable.
 
 ---
 
@@ -153,8 +156,9 @@ Corrected the directive name and restarted.
 **Root cause:** vsftpd advertised `0.0.0.0` as the passive-mode address because `pasv_address` was unset.
 
 **Resolution:** Added the bridged IP to `/etc/vsftpd.conf`:
+
 ```
-pasv_address=192.168.18.117
+pasv_address=your_server_ip
 pasv_min_port=40000
 pasv_max_port=50000
 ```
@@ -183,13 +187,13 @@ pasv_max_port=50000
 
 ## ✅ Testing & Verification
 
-| Test | Expected | Result |
-|------|----------|--------|
-| Anonymous login | Denied | ✅ Pass |
-| Non-whitelisted user | Denied | ✅ Pass |
-| Valid user + TLS handshake | Success | ✅ Pass |
-| File download (GET) | Success | ✅ Pass |
-| File upload (PUT) | Success | ✅ Pass |
+| Test                       | Expected | Result  |
+| -------------------------- | -------- | ------- |
+| Anonymous login            | Denied   | ✅ Pass |
+| Non-whitelisted user       | Denied   | ✅ Pass |
+| Valid user + TLS handshake | Success  | ✅ Pass |
+| File download (GET)        | Success  | ✅ Pass |
+| File upload (PUT)          | Success  | ✅ Pass |
 
 ## 💡 Key Learnings
 
@@ -248,8 +252,8 @@ This project is licensed under the MIT License — see the [LICENSE](LICENSE) fi
 **Theresia Posumah**
 Software Developer
 
-- GitHub: [@yourusername](https://github.com/yourusername)
-- LinkedIn: [Your LinkedIn](https://linkedin.com/in/yourprofile)
+- GitHub: [@yourusername](https://github.com/LearningNerdGirl)
+- LinkedIn: [Your LinkedIn](https://www.linkedin.com/in/theresia-mutiara-p-742728201/)
 
 ---
 
