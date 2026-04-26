@@ -252,8 +252,8 @@ This project is licensed under the MIT License — see the [LICENSE](LICENSE) fi
 **Theresia Posumah**
 Software Developer
 
-- GitHub: [@yourusername](https://github.com/LearningNerdGirl)
-- LinkedIn: [Your LinkedIn](https://www.linkedin.com/in/theresia-mutiara-p-742728201/)
+- GitHub: [LearningNerdGirl](https://github.com/LearningNerdGirl)
+- LinkedIn: [Theresia Mutiara Posumah](https://www.linkedin.com/in/theresia-mutiara-p-742728201/)
 
 ---
 
